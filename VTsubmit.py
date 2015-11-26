@@ -1,7 +1,7 @@
 import requests, os, time, hashlib
 
 file_dir = 'C:\Sysadmin_tools'
-params = {'apikey': '23c479aa8d758b623162984a38894ed305591648440b7439d0632dce1a2e96b5'}
+params = {'apikey': 'api-key-here'}
 
 def md5sum(filename):
     hash = hashlib.md5()
