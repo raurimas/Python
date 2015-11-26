@@ -20,6 +20,7 @@ for root, directories, files in os.walk(file_dir):
         # Public API allows to scan 4 files per minute
         time.sleep(15)
 
+        # If file not checked by VirusTotal yet, submit it for scanning
         if json_response['response_code'] == 0:
             # Public API allows files <= 32 MB
             if (round(os.path.getsize(os.path.join(root, filename))/1024/1024)) <= 32:
