@@ -2,8 +2,8 @@ import requests, os, time, hashlib
 
 file_dir = 'C:\Sysadmin_tools'
 
-def md5sum(filename):
-    hash = hashlib.md5()
+def sha256sum(filename):
+    hash = hashlib.sha256()
     with open(filename, 'rb') as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash.update(chunk)
@@ -11,8 +11,8 @@ def md5sum(filename):
 
 for root, directories, files in os.walk(file_dir):
     for filename in files:
-        md5 = md5sum(os.path.join(root, filename))
-        params = {'apikey': '23c479aa8d758b623162984a38894ed305591648440b7439d0632dce1a2e96b5', 'resource': md5}
+        sha256hash = sha256sum(os.path.join(root, filename))
+        params = {'apikey': '23c479aa8d758b623162984a38894ed305591648440b7439d0632dce1a2e96b5', 'resource': sha256hash}
         response = requests.get('http://www.virustotal.com/vtapi/v2/file/report', params=params)
         json_response = response.json()
 
@@ -30,23 +30,6 @@ for root, directories, files in os.walk(file_dir):
                 print(json_response['verbose_msg'])
         else:
             if json_response['positives'] > 0:
-                print('File:', filename)
-                print('Positives:', json_response['positives'])
-                print(json_response['scans']['Symantec'])
-                print(json_response['scans']['TrendMicro'])
-                print(json_response['scans']['Fortinet'])
-                print(json_response['scans']['Kaspersky'])
-                print(json_response['scans']['ClamAV'])
-                print(json_response['scans']['McAfee'])
-                print(json_response['scans']['DrWeb'])
-                print(json_response['scans']['Sophos'])
-                print(json_response['scans']['Avast'])
-                print(json_response['scans']['Microsoft'])
-                print(json_response['scans']['BitDefender'])
-                print(json_response['scans']['Malwarebytes'])
-                print(json_response['scans']['Avira'])
-                print(json_response['scans']['ESET-NOD32'])
-                print(json_response['scans']['F-Secure'])
-                print(json_response['scans']['Panda'])
+                print(filename, 'scan date:', json_response['scan_date'], 'detected:', json_response['positives'], 'VT URL:', json_response['permalink'])
             else:
                 print(filename, 'no malicious code found')
