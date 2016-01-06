@@ -1,7 +1,7 @@
 import urllib.request, urllib.parse
 from xml.etree import ElementTree
 
-log_file = "C:\\Users\\304452\\Desktop\\phising_patterns2.txt"
+log_file = "C:\\Users\\test\\log.txt"
 with open(log_file) as f:
     urls = f.readlines()
 
